@@ -1,0 +1,74 @@
+<div>
+    <h1>Запись</h1>
+    <form class="form">
+        <div>
+            <label>Имя
+                <input class="form-control" type="text" placeholder="Имя" ng-model="recordDto.firstname"
+                       ng-click="cleanResponse()">
+            </label>
+            <br>
+            <label>Фамилия
+                <input class="form-control" type="text" placeholder="Фамилия" ng-model="recordDto.lastname"
+                       ng-click="cleanResponse()">
+            </label>
+            <br>
+            <label>Дата рождения
+                <input class="form-control" type="date" placeholder="Дата рождения" ng-model="recordDto.date_of_birth"
+                       ng-click="cleanResponse()">
+            </label>
+            <br>
+            <label>Время записи
+                <input class="form-control" type="datetime-local" placeholder="Время записи"
+                       ng-model="recordDto.recording_time"
+                       ng-click="cleanResponse()">
+            </label>
+            <br>
+            <label>Статус
+                <div>
+                    <input type="radio" id="active" name="status" value="ACTIVE"
+                           ng-model="recordDto.status">
+                    <label for="ACTIVE">ACTIVE</label>
+                    <input type="radio" id="NOT_ACTIVE" name="status" value="NOT_ACTIVE"
+                           ng-model="recordDto.status">
+                    <label for="NOT_ACTIVE">NOT_ACTIVE</label>
+                    <input type="radio" id="DELETED" name="status" value="DELETED"
+                           ng-model="recordDto.status">
+                    <label for="DELETED">DELETED</label>
+                </div>
+            </label>
+            <br>
+            <label>Направление
+                <select class="form-control" ng-model="recordDto.recording_direction"
+                        ng-options="d for d in directionSet">
+                </select>
+            </label>
+            <br>
+            <label>Льготы
+                <div ng-repeat="p in privilegesArray">
+                    <input type="checkbox" id="p.id" ng-click="addPrivilegeDto(p)" ng-checked="isPrivilegeIncludes(p.id)">
+                    {{p.name}}
+                </div>
+            </label>
+        </div>
+        <p></p>
+
+        <button class="btn btn-primary" ng-click="createNewRecord()">Создать запись</button>
+        <br>
+        <button class="btn btn-primary" ng-click="cleanRecordDto()">Очистить форму</button>
+        <button class="btn btn-primary" ng-click="getAllRecordsDto()">Выбрать запись по фамилии</button>
+        <label ng-show="isRecordSetVisible">
+            <select class="form-control" ng-model="recordDto"
+                    ng-options="r.lastname for r in recordSet" ng-click="fillNewPrivilegesDto()">
+            </select>
+        </label>
+        <button class="btn btn-primary" ng-click="deleteRecord(recordDto.id)">Удалить выбранную запись</button>
+
+        <p></p>
+        <span class="error" id="errors" ng-repeat="error in errors">
+                          {{error.defaultMessage}}
+                          <br>
+                </span>
+        <span id="response"></span>
+        <p></p>
+    </form>
+</div>
